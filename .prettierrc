@@ -1,0 +1,10 @@
+{
+  "semi": true,                    // Usa ponto e vírgula no final das declarações
+  "singleQuote": true,             // Usa aspas simples ao invés de aspas duplas
+  "tabWidth": 2,                   // Define o tamanho da tabulação como 2 espaços
+  "trailingComma": "es5",          // Adiciona vírgulas ao final de objetos e arrays
+  "bracketSpacing": true,          // Adiciona espaços dentro de colchetes
+  "jsxBracketSameLine": false,     // Coloca o '>' de componentes JSX em uma nova linha se a tag for multi-linha
+  "arrowParens": "always",         // Sempre coloca parênteses ao redor de argumentos de arrow functions
+  "printWidth": 80                 // Limita o comprimento máximo das linhas para 80 caracteres
+}

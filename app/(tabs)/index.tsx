@@ -1,14 +1,30 @@
-import { StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
+import { useGetAllProductsQuery } from '@/api';
+import { FlashList } from '@shopify/flash-list';
+import { HeaderTitle } from '@react-navigation/elements';
+import { TProduct } from '@/api/endpoints/products';
+import { Card } from '@/components/CardProduct';
+import SkeletonCard from '@/components/CardProduct/skeleton';
 
-import EditScreenInfo from '@/components/EditScreenInfo';
-import { Text, View } from '@/components/Themed';
+export default function HomeTab() {
+  const { data, isLoading } = useGetAllProductsQuery(undefined);
 
-export default function TabOneScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Tab One</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="app/(tabs)/index.tsx" />
+      <HeaderTitle>List Product Example</HeaderTitle>
+
+      <FlashList
+        data={isLoading ? Array.from({ length: 10 }) : data} // 10 skeletons se estiver carregando
+        renderItem={({ item, index }: { item: TProduct, index: number}) =>
+          isLoading ? (
+            <SkeletonCard key={index} /> // Exibir skeleton enquanto carrega
+          ) : (
+            <Card key={item.id} title={item.title} price={item.price} />
+          )
+        }
+        keyExtractor={(item, index) => (isLoading ? index.toString() : item.id)}
+        estimatedItemSize={100}
+      />
     </View>
   );
 }
@@ -16,16 +32,6 @@ export default function TabOneScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
+    padding: 10
   },
 });
